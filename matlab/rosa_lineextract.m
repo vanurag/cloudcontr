@@ -13,7 +13,7 @@ function P = rosa_lineextract(P, RADIUS, bUpdateConnectivity)
 % graph
 % @reform-data:     2010-8-20  decompose the original function into several
 % small functions.
-SHOW_RESULTS = true;
+SHOW_RESULTS = false;
 
 options.collapse_order = 1;
 if (bUpdateConnectivity)

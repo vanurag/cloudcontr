@@ -1,7 +1,7 @@
 classdef GS
     % global settings    
     properties (Constant)
-        USING_POINT_RING = true; % false for Oscar, ture for our implementation
+        USING_POINT_RING = false; % false for Oscar, ture for our implementation
 %         PC_COLOR = {1, .73, .0, 0.5f}; // gold
 %         PC_COLOR = {0.275, .337, .60, 0.5f}; // blue
         PC_COLOR = [1.0, .65, .35]; % point cloud color, orange
@@ -10,7 +10,7 @@ classdef GS
         
         LAPLACIAN_CONSTRAINT_WEIGHT = 3; % init Laplacian contraction weight, compute automatically now.
         POSITION_CONSTRAINT_WEIGHT = 1; % init position constraint weight
-        LAPLACIAN_CONSTRAINT_SCALE = 3; % scalar for increasing WL in each iteration
+        LAPLACIAN_CONSTRAINT_SCALE = 2; % scalar for increasing WL in each iteration
         MAX_LAPLACIAN_CONSTRAINT_WEIGHT = 2048;%2048
         MAX_POSITION_CONSTRAINT_WEIGHT = 10000;%10000
         MAX_CONTRACT_NUM = 20; % max contract iterations 20
@@ -30,6 +30,11 @@ classdef GS
             c = (bbox(4:6)+bbox(1:3))*0.5;            
             pts = pts - repmat(c, size(pts,1), 1);
             s = 1.6 / max(bbox(4:6)-bbox(1:3));% make the bbox's diagnol = 1.6. %1.0, 1.6
+            pts = pts*s;
+        end
+        function [pts] = normalize_cs(pts, c, s)
+            % scale points and move to provided center        
+            pts = pts - repmat(c, size(pts,1), 1);
             pts = pts*s;
         end
         function [] = test_normalize(pts)
@@ -91,6 +96,15 @@ classdef GS
                         tmp = repmat(pts(i,:), length(ring),1) - pts(ring,:);
                         ms(i) = max( sum(tmp.^2,2).^0.5);
                     end                    
+            end
+        end
+        function ra = one_ring_area(pts,faces,frings)
+            n = size(pts,1);
+            ra = zeros(n,1);
+            parfor i = 1:n
+                fring = frings{i};
+                F = faces(fring,:);
+                ra(i) = 0.5*vecnorm(cross(pts(F(:,2),:)-pts(F(:,1),:), pts(F(:,3),:)-pts(F(:,1),:), 2),2,2);
             end
         end
     end

@@ -1,9 +1,9 @@
 function [spls, A, corresp] = edge_collapse_update(pts, spls, corresp, neigh, spls_adj, options)
 % collapse the adjacency matrix spls_adj until the described graph is 1-dimensional.
-% this inherits some ideas from [Li et al. 2001] ¡°Decomposing  polygon meshes for interactive
-% applications¡±, which remove all triangles of the graph to form a 1-D skeleton.
+% this inherits some ideas from [Li et al. 2001] ï¿½ï¿½Decomposing  polygon meshes for interactive
+% applicationsï¿½ï¿½, which remove all triangles of the graph to form a 1-D skeleton.
 %
-% ºÍedge_collapse×öÁË¼¸¸ö¶Ô±ÈÊÔÑé£¬½á¹ûÊÇÒ»ÖÂµÄ¡£
+% ï¿½ï¿½edge_collapseï¿½ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ÂµÄ¡ï¿½
 %
 % pts: samples
 % spls: downsamples
@@ -22,8 +22,8 @@ options.null = 0;
 collapse_order = getoptions(options, 'collapse_order', '0'); 
 
 %% visual debug conditions
-SHOW_COLLAPSE_PROGRESS = true;
-SHOW_RESULTS = true;
+SHOW_COLLAPSE_PROGRESS = false;
+SHOW_RESULTS = false;
 
 if SHOW_COLLAPSE_PROGRESS || SHOW_RESULTS
     close all;

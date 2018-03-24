@@ -13,7 +13,7 @@ extension='.off';
 
 %% Step 0: read file (point cloud & local feature size if possible), and
 % normalize the modle.
-filename = '../data/simplejoint_v4770';% which file we should run on
+filename = '../data/Broadleaf_High_noleaves_scaled_0.2_stripped-normals';% which file we should run on
 
 tic
 P.filename = [filename extension];% point set
@@ -48,7 +48,7 @@ tic
 [P.cpts, t, initWL, WC, sl] = contraction_by_mesh_laplacian(P, options);
 disp(sprintf('Contraction:'));
 toc
-%% step 2: Point to curve ¨C by cluster ROSA2.0
+%% step 2: Point to curve ï¿½C by cluster ROSA2.0
 tic
 P.sample_radius = P.diameter*0.02;
 P = rosa_lineextract(P,P.sample_radius, 1);

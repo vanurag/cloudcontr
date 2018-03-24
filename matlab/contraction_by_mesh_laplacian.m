@@ -53,7 +53,7 @@ end
 %##########################################################################
 % visual debug conditions
 RING_SIZE_TYPE = 1;%1:min, 2:mean, 3:max
-SHOW_CONTRACTION_PROGRESS = true;
+SHOW_CONTRACTION_PROGRESS = false;
 Laplace_type = 'conformal';%conformal%combinatorial%spring%mvc
 
 % setting
@@ -70,7 +70,7 @@ elseif strcmp(Laplace_type,'conformal')
 else
     WC = getoptions(options, 'WC', 1);
 end
-WH = ones(P.npts, 1)*WC; % ³õÊ¼Ô¼ÊøÈ¨
+WH = ones(P.npts, 1)*WC; % ï¿½ï¿½Ê¼Ô¼ï¿½ï¿½È¨
 sl = getoptions(options, 'sl', GS.LAPLACIAN_CONSTRAINT_SCALE); % scale factor for WL in each iteration! in original paper is 2;
 WL = initWL;%*sl;
 
@@ -145,7 +145,7 @@ while t<iterate_time
     if WL>GS.MAX_LAPLACIAN_CONSTRAINT_WEIGHT,WL=GS.MAX_LAPLACIAN_CONSTRAINT_WEIGHT;end; % from Oscar08's implementation, 2048
     if options.USING_POINT_RING
         if strcmp(Laplace_type,'mvc')
-            WH = WC.*(sizes./size_new)*10;% ³õÊ¼Ô¼ÊøÈ¨
+            WH = WC.*(sizes./size_new)*10;% ï¿½ï¿½Ê¼Ô¼ï¿½ï¿½È¨
         else
             WH = WC.*(sizes./size_new);
         end
@@ -187,7 +187,7 @@ while t<iterate_time
     t = t+1
     
     if SHOW_CONTRACTION_PROGRESS
-        % ÏÔÊ¾Ç°ºóµãÔÆ     
+        % ï¿½ï¿½Ê¾Ç°ï¿½ï¿½ï¿½ï¿½ï¿½     
         delete(h1);delete(h2);
         h1 = scatter3(P.pts(:,1),P.pts(:,2), P.pts(:,3),10,WH,'filled');
         h2 = scatter3(cpts(:,1),cpts(:,2), cpts(:,3),10,ones(P.npts,1)*WL,'filled');

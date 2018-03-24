@@ -13,7 +13,7 @@ function [spls, corresp] = farthest_sampling_by_sphere(pts, RADIUS)
 % @version 2.0
 
 %% visual debug conditions
-SHOW_SAMPLING_PROGRESS = true;
+SHOW_SAMPLING_PROGRESS = false;
 SHOW_RESULTS = false;
 
 %%
