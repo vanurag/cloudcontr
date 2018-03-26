@@ -114,14 +114,9 @@ if options.USING_POINT_RING
     size_new = GS.one_ring_size(cpts, P.rings, RING_SIZE_TYPE);
     a(t) = sum(size_new)/sum(sizes);
 else
-%     sizes = GS.one_ring_area(P.pts,P.rings);
-%     size_new = GS.one_ring_area(cpts,P.rings);
-
-%     sizes = area_1_face_ring(P.pts, P.faces, P.frings);
-%     size_new =area_1_face_ring(cpts, P.faces, P.frings);    
-    ratio_new = area_ratio_1_face_ring(P.pts, cpts, P.faces, P.frings);
-    ratio = ones(size(ratio_new));
-    a(t) = mean(ratio_new);%sum(ratio_new)/sum(ratio);
+    sizes = GS.one_ring_area(P.pts, P.faces, P.frings);
+    size_new = GS.one_ring_area(cpts, P.faces, P.frings);    
+    a(t) = sum(size_new)/sum(sizes);
 end
 
 disp(sprintf('compute area:'));
@@ -151,8 +146,8 @@ while t<iterate_time
         end
     else    
 %         WH = WC.*(sizes./size_new);
-%         WH = WC.*((sizes./size_new).^0.5); % a little diff with Oscar08
-        WH = WC*(ratio_new.^(-0.5));% from Oscar08, if the size is area
+        WH = WC.*((sizes./size_new).^0.5); % a little diff with Oscar08
+%         WH = WC*(ratio_new.^(-0.5));% from Oscar08, if the size is area
     end
     
     WH(WH>GS.MAX_POSITION_CONSTRAINT_WEIGHT) = GS.MAX_POSITION_CONSTRAINT_WEIGHT;% from Oscar08's implementation, 10000
@@ -167,11 +162,8 @@ while t<iterate_time
         size_new = GS.one_ring_size(tmp, P.rings, RING_SIZE_TYPE);  
         a(end+1) = sum(size_new)/sum(sizes);
     else
-%         size_new = GS.one_ring_area(cpts,P.rings);
-%         size_new =area_1_face_ring(tmp, P.faces, P.frings);
-        ratio = ratio_new;
-        ratio_new = area_ratio_1_face_ring(P.pts, tmp, P.faces, P.frings);
-        a(end+1) = mean(ratio_new);%sum(ratio_new)/sum(ratio);
+        size_new = GS.one_ring_area(tmp, P.faces, P.frings);
+        a(end+1) = sum(size_new)/sum(sizes);
     end    
 
     tmpbox = GS.compute_bbox(tmp);

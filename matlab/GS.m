@@ -104,8 +104,17 @@ classdef GS
             parfor i = 1:n
                 fring = frings{i};
                 F = faces(fring,:);
-                ra(i) = 0.5*vecnorm(cross(pts(F(:,2),:)-pts(F(:,1),:), pts(F(:,3),:)-pts(F(:,1),:), 2),2,2);
+                ra(i) = sum(0.5*vecnorm(cross(pts(F(:,2),:)-pts(F(:,1),:), pts(F(:,3),:)-pts(F(:,1),:), 2),2,2));
             end
+        end
+        function area = average_face_area(pts,faces)
+            n = size(faces,1);
+            fa = zeros(n,1);
+            parfor i = 1:n
+                F = faces(i,:);
+                fa(i) = 0.5*norm(cross(pts(F(1,2),:)-pts(F(1,1),:), pts(F(1,3),:)-pts(F(1,1),:)));
+            end
+            area = mean(fa);
         end
     end
 end

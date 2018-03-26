@@ -26,7 +26,7 @@ if options.USING_POINT_RING
 else    
     S.frings = compute_vertex_face_ring(S.faces);
     S.rings = compute_vertex_ring(S.faces, S.frings);
-    GS.one_ring_area(S.pts,S.faces,S.frings)
+%     GS.one_ring_area(S.pts,S.faces,S.frings);
 end
 disp(sprintf('compute local 1-ring:'));
 toc
